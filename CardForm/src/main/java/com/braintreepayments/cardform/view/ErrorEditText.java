@@ -156,7 +156,7 @@ public class ErrorEditText extends TextInputEditText {
 
         if (mErrorAnimator != null && mError) {
             startAnimation(mErrorAnimator);
-            VibrationHelper.vibrate(getContext(), 10);
+            VibrationHelper.INSTANCE.vibrate(getContext(), 10);
         }
     }
 

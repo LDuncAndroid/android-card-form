@@ -19,13 +19,13 @@ public class ViewUtilsTest {
     public void isDarkBackground_detectsBlackBackgroundAndReturnsTrue() {
         Activity activity = setupActivity(R.color.bt_black);
 
-        assertTrue(ViewUtils.isDarkBackground(activity));
+        assertTrue(ViewUtils.INSTANCE.isDarkBackground(activity));
     }
 
     @Test
     public void isDarkBackground_detectsWhiteBackgroundAndReturnsFalse() {
         Activity activity = setupActivity(R.color.bt_white);
 
-        assertFalse(ViewUtils.isDarkBackground(activity));
+        assertFalse(ViewUtils.INSTANCE.isDarkBackground(activity));
     }
 }

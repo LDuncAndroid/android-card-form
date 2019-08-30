@@ -17,7 +17,7 @@ public class PaddedImageSpan extends ImageSpan {
     public PaddedImageSpan(Context context, int resourceId) {
         super(context, resourceId);
         mResourceId = resourceId;
-        mPadding = ViewUtils.dp2px(context, 8);
+        mPadding = ViewUtils.INSTANCE.dp2px(context, 8);
     }
 
     public void setDisabled(boolean disabled) {

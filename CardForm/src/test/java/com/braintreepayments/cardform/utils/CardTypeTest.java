@@ -142,13 +142,13 @@ public class CardTypeTest {
         for (final Map.Entry<String, CardType> entry : SAMPLE_CARDS.entrySet()) {
             final String cardNumber = entry.getKey();
             final CardType cardType = entry.getValue();
-            final CardType actualType = CardType.forCardNumber(cardNumber);
+            final CardType actualType = CardType.Companion.forCardNumber(cardNumber);
 
             assertEquals(String.format("CardType.forAccountNumber failed for %s", cardNumber), cardType, actualType);
 
             if (cardType != CardType.UNKNOWN && cardType != CardType.EMPTY) {
                 assertTrue(String.format("%s: Luhn check failed for [%s]", cardType, cardNumber),
-                        CardType.isLuhnValid(cardNumber));
+                        CardType.Companion.isLuhnValid(cardNumber));
             }
         }
     }
@@ -158,7 +158,7 @@ public class CardTypeTest {
         for (final Map.Entry<String, CardType> entry : SAMPLE_CARDS.entrySet()) {
             final String cardNumber = entry.getKey();
             final CardType cardType = entry.getValue();
-            final CardType actualType = CardType.forCardNumber(cardNumber);
+            final CardType actualType = CardType.Companion.forCardNumber(cardNumber);
 
             assertEquals(String.format("CardType.forAccountNumber failed for %s", cardNumber), cardType, actualType);
 

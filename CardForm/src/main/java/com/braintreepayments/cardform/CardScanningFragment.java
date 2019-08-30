@@ -67,7 +67,7 @@ public class CardScanningFragment extends Fragment {
                 .putExtra(CardIOActivity.EXTRA_REQUIRE_CVV, false)
                 .putExtra(CardIOActivity.EXTRA_REQUIRE_POSTAL_CODE, false)
                 .putExtra(CardIOActivity.EXTRA_GUIDE_COLOR,
-                        ColorUtils.getColor(getActivity(), "colorAccent", R.color.bt_blue));
+                        ColorUtils.INSTANCE.getColor(getActivity(), "colorAccent", R.color.bt_blue));
 
         startActivityForResult(scanIntent, CARD_IO_REQUEST_CODE);
     }

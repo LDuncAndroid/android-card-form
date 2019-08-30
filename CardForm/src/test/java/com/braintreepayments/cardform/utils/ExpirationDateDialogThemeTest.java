@@ -19,7 +19,7 @@ public class ExpirationDateDialogThemeTest {
     public void detectTheme_detectsBlackBackgroundAndReturnsLightTheme() {
         Activity activity = setupActivity(R.color.bt_black);
 
-        ExpirationDateDialogTheme theme = ExpirationDateDialogTheme.detectTheme(activity);
+        ExpirationDateDialogTheme theme = ExpirationDateDialogTheme.Companion.detectTheme(activity);
 
         assertEquals(ExpirationDateDialogTheme.LIGHT, theme);
         assertEquals(getColor(R.color.bt_black_87), theme.getItemTextColor());
@@ -31,7 +31,7 @@ public class ExpirationDateDialogThemeTest {
     public void detectTheme_detectsWhiteBackgroundAndReturnsDarkTheme() {
         Activity activity = setupActivity(R.color.bt_white);
 
-        ExpirationDateDialogTheme theme = ExpirationDateDialogTheme.detectTheme(activity);
+        ExpirationDateDialogTheme theme = ExpirationDateDialogTheme.Companion.detectTheme(activity);
 
         assertEquals(ExpirationDateDialogTheme.DARK, theme);
         assertEquals(getColor(R.color.bt_white_87), theme.getItemTextColor());
@@ -43,7 +43,7 @@ public class ExpirationDateDialogThemeTest {
     public void getSelectedItemBackground_returnsDefaultColorWhenThereIsNoAccentColor() {
         Activity activity = setupActivity(R.color.bt_white);
 
-        ExpirationDateDialogTheme theme = ExpirationDateDialogTheme.detectTheme(activity);
+        ExpirationDateDialogTheme theme = ExpirationDateDialogTheme.Companion.detectTheme(activity);
 
         assertEquals(getColor(R.color.bt_blue), theme.getSelectedItemBackground());
     }

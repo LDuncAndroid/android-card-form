@@ -62,7 +62,7 @@ public class ExpirationDateDialog extends Dialog implements DialogInterface.OnSh
     }
 
     public static ExpirationDateDialog create(Activity activity, ExpirationDateEditText editText) {
-        ExpirationDateDialogTheme theme = ExpirationDateDialogTheme.detectTheme(activity);
+        ExpirationDateDialogTheme theme = ExpirationDateDialogTheme.Companion.detectTheme(activity);
         ExpirationDateDialog dialog;
         if (theme == ExpirationDateDialogTheme.LIGHT) {
             dialog = new ExpirationDateDialog(activity, R.style.bt_expiration_date_dialog_light);

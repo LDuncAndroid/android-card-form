@@ -31,7 +31,7 @@ public class VibrationHelperTest {
         when(context.getPackageManager()).thenReturn(packageManager);
         when(context.getSystemService(Context.VIBRATOR_SERVICE)).thenReturn(vibrator);
 
-        VibrationHelper.vibrate(context, 1000);
+        VibrationHelper.INSTANCE.vibrate(context, 1000);
 
         verify(vibrator).vibrate(1000);
     }
@@ -47,7 +47,7 @@ public class VibrationHelperTest {
         when(context.getPackageName()).thenReturn("com.braintreepayments.cardform.test");
         when(context.getSystemService(Context.VIBRATOR_SERVICE)).thenReturn(vibrator);
 
-        VibrationHelper.vibrate(context, 1000);
+        VibrationHelper.INSTANCE.vibrate(context, 1000);
 
         verifyZeroInteractions(vibrator);
     }
@@ -60,7 +60,7 @@ public class VibrationHelperTest {
         Context context = mock(Context.class);
         when(context.getPackageManager()).thenReturn(packageManager);
 
-        assertTrue(VibrationHelper.hasVibrationPermission(context));
+        assertTrue(VibrationHelper.INSTANCE.hasVibrationPermission(context));
     }
 
     @Test
@@ -72,6 +72,6 @@ public class VibrationHelperTest {
         when(context.getPackageManager()).thenReturn(packageManager);
         when(context.getPackageName()).thenReturn("com.braintreepayments.cardform.test");
 
-        assertFalse(VibrationHelper.hasVibrationPermission(context));
+        assertFalse(VibrationHelper.INSTANCE.hasVibrationPermission(context));
     }
 }

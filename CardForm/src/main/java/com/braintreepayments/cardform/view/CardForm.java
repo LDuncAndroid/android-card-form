@@ -287,7 +287,7 @@ public class CardForm extends LinearLayout implements OnCardTypeChangedListener,
                 WindowManager.LayoutParams.FLAG_SECURE);
 
         boolean cardHolderNameVisible = mCardholderNameStatus != FIELD_DISABLED;
-        boolean isDarkBackground = ViewUtils.isDarkBackground(activity);
+        boolean isDarkBackground = ViewUtils.INSTANCE.isDarkBackground(activity);
         mCardholderNameIcon.setImageResource(isDarkBackground ? R.drawable.bt_ic_cardholder_name_dark: R.drawable.bt_ic_cardholder_name);
         mCardNumberIcon.setImageResource(isDarkBackground ? R.drawable.bt_ic_card_dark : R.drawable.bt_ic_card);
         mPostalCodeIcon.setImageResource(isDarkBackground ? R.drawable.bt_ic_postal_code_dark : R.drawable.bt_ic_postal_code);
