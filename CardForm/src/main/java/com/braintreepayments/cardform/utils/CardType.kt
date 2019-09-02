@@ -4,15 +4,31 @@ import android.text.TextUtils
 import com.braintreepayments.cardform.R
 import java.util.regex.Pattern
 
+/**
+ * Card types and related formatting and validation rules.
+ */
 enum class CardType(
     regex: String,
+    /**
+     * @return The android resource id for the front card image, highlighting card number format.
+     */
     val frontResource: Int,
+    /**
+     * @return minimum length of a card for this [com.braintreepayments.cardform.utils.CardType]
+     */
     val minCardLength: Int,
+    /**
+     * @return max length of a card for this [com.braintreepayments.cardform.utils.CardType]
+     */
     val maxCardLength: Int,
+    /**
+     * @return The length of the current card's security code.
+     */
     val securityCodeLength: Int,
-    val securityCodeName: Int,
-    relaxedPrefixPattern: String?
-) {
+    /**
+     * @return The android resource id for the security code name for this card type.
+     */
+    val securityCodeName: Int, relaxedPrefixPattern: String?) {
 
     VISA("^4\\d*",
         R.drawable.bt_ic_visa,
@@ -64,17 +80,23 @@ enum class CardType(
         12, 19,
         3, R.string.bt_cvv, null);
 
+    /**
+     * @return The regex matching this card type.
+     */
     val pattern: Pattern = Pattern.compile(regex)
+    /**
+     * @return The relaxed prefix regex matching this card type. To be used in determining
+     * card type if no pattern matches.
+     */
     val relaxedPrefixPattern: Pattern? =
         relaxedPrefixPattern?.let { Pattern.compile(relaxedPrefixPattern) }
 
-
     /**
-     * @return the locations where spaces should be inserted when formatting the card in a
-     * user friendly way. Only for display purposes.
+     * @return the locations where spaces should be inserted when formatting the card in a user
+     * friendly way. Only for display purposes.
      */
-    fun getSpaceIndices(): IntArray =
-        if (this::class.java == AMEX::class.java) AMEX_SPACE_INDICES else DEFAULT_SPACE_INDICES
+    val spaceIndices: IntArray
+        get() = if (this == AMEX) AMEX_SPACE_INDICES else DEFAULT_SPACE_INDICES
 
 
     /**
@@ -98,8 +120,8 @@ enum class CardType(
         }
     }
 
-
     companion object {
+
         private val AMEX_SPACE_INDICES = intArrayOf(4, 10)
         private val DEFAULT_SPACE_INDICES = intArrayOf(4, 8, 12)
 
@@ -107,8 +129,8 @@ enum class CardType(
          * Returns the card type matching this account, or
          * [com.braintreepayments.cardform.utils.CardType.UNKNOWN] for no match.
          *
-         * A partial account type may be given, with the caveat that it may not have enough digits to
-         * match.
+         * A partial account type may be given, with the caveat that it may not have enough digits
+         * to match.
          */
         fun forCardNumber(cardNumber: String): CardType {
             val patternMatch = forCardNumberPattern(cardNumber)
@@ -121,10 +143,9 @@ enum class CardType(
                 return relaxedPrefixPatternMatch
             }
 
-            return if (!cardNumber.isEmpty()) {
+            return if (cardNumber.isNotEmpty()) {
                 UNKNOWN
             } else EMPTY
-
         }
 
         private fun forCardNumberPattern(cardNumber: String): CardType =
@@ -140,8 +161,10 @@ enum class CardType(
          *
          * @param cardNumber a String consisting of numeric digits (only).
          * @return `true` if the sequence passes the checksum
-         * @throws IllegalArgumentException if `cardNumber` contained a non-digit (where [ ][Character.isDefined] is `false`).
-         * @see [Luhn Algorithm](http://en.wikipedia.org/wiki/Luhn_algorithm) */
+         * @throws IllegalArgumentException if `cardNumber` contained a non-digit
+         * (where [Character.isDefined] is `false`).
+         * @see [Luhn Algorithm](http://en.wikipedia.org/wiki/Luhn_algorithm)
+         */
         fun isLuhnValid(cardNumber: String): Boolean {
             val reversed = StringBuffer(cardNumber).reverse().toString()
             val len = reversed.length

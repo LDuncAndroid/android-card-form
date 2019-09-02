@@ -6,8 +6,9 @@ import android.view.View
 import java.util.*
 
 /**
- * A transformation that masks card numbers up to the last 4 digits. For example, it will transform
- * "4111111111111111" to "●●●● 1111". This can be used to mask card numbers in an [android.widget.EditText].
+ * A transformation that masks card numbers up to the last 4 digits.
+ * For example, it will transform "4111111111111111" to "●●●● 1111".
+ * This can be used to mask card numbers in an [android.widget.EditText].
  */
 class CardNumberTransformation : TransformationMethod {
 
@@ -28,7 +29,8 @@ class CardNumberTransformation : TransformationMethod {
         return source
     }
 
-    override fun onFocusChanged(view: View, sourceText: CharSequence, focused: Boolean, direction: Int, previouslyFocusedRect: Rect) {}
+    override fun onFocusChanged(view: View, sourceText: CharSequence, focused: Boolean,
+                                direction: Int, previouslyFocusedRect: Rect?) = Unit
 
     companion object {
         private const val FOUR_DOTS = "••••"
