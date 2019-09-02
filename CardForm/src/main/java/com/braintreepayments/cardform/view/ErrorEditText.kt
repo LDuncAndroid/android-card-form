@@ -24,9 +24,7 @@ import com.google.android.material.textfield.TextInputLayout
 open class ErrorEditText : TextInputEditText {
 
     constructor(context: Context) : super(context)
-
     constructor(context: Context, attrs: AttributeSet) : super(context, attrs)
-
     constructor(context: Context, attrs: AttributeSet?, defStyle: Int) : super(context, attrs, defStyle)
 
     private var mErrorAnimator: Animation? = null
@@ -148,10 +146,10 @@ open class ErrorEditText : TextInputEditText {
     /**
      * Attempt to close the soft keyboard. Will have no effect if the keyboard is not open.
      */
-    fun closeSoftKeyboard() {
-        (context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager)
-            .hideSoftInputFromWindow(windowToken, 0)
-    }
+    fun closeSoftKeyboard() =
+        context.getSystemService(Context.INPUT_METHOD_SERVICE)
+            ?.let { it as InputMethodManager }
+            ?.hideSoftInputFromWindow(windowToken, 0)
 
     private fun setupRTL() {
         if (SDK_INT >= JELLY_BEAN_MR1) {

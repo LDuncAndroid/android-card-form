@@ -15,12 +15,10 @@ import java.util.*
 class SupportedCardTypesView : TextView {
 
     constructor(context: Context) : super(context)
-
     constructor(context: Context, attrs: AttributeSet) : super(context, attrs)
-
     constructor(context: Context, attrs: AttributeSet?, defStyle: Int) : super(context, attrs, defStyle)
 
-    private val mSupportedCardTypes = ArrayList<CardType>()
+    private val mSupportedCardTypes = mutableListOf<CardType>()
 
     /**
      * Sets the supported [CardType]s on the view to display the card icons.

@@ -24,7 +24,12 @@ import java.util.*
 
 class ExpirationDateDialog : Dialog, DialogInterface.OnShowListener {
 
-    private val mYears = ArrayList<String>()
+    constructor(context: Context) : super(context)
+    constructor(context: Context, themeResId: Int) : super(context, themeResId)
+    constructor(context: Context, cancelable: Boolean, cancelListener: DialogInterface.OnCancelListener) : super(context, cancelable, cancelListener)
+
+    private val mYears = (0 until DateValidator.MAXIMUM_VALID_YEAR_DIFFERENCE)
+        .asIterable().map { i -> (CURRENT_YEAR + i).toString() }
 
     private var mAnimationDelay: Int = 0
     private var mEditText: ExpirationDateEditText? = null
@@ -33,12 +38,6 @@ class ExpirationDateDialog : Dialog, DialogInterface.OnShowListener {
     private var mHasSelectedYear: Boolean = false
     private var mSelectedMonth = -1
     private var mSelectedYear = -1
-
-    constructor(context: Context) : super(context)
-
-    constructor(context: Context, themeResId: Int) : super(context, themeResId)
-
-    constructor(context: Context, cancelable: Boolean, cancelListener: DialogInterface.OnCancelListener) : super(context, cancelable, cancelListener)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -52,10 +51,6 @@ class ExpirationDateDialog : Dialog, DialogInterface.OnShowListener {
 
         setOnShowListener(this)
 
-        (0 until DateValidator.MAXIMUM_VALID_YEAR_DIFFERENCE).forEach { i ->
-            mYears.add((CURRENT_YEAR + i).toString())
-        }
-
         val monthAdapter = ExpirationDateItemAdapter(context, theme = mTheme, objects = MONTHS)
         val yearAdapter = ExpirationDateItemAdapter(context, theme = mTheme, objects = mYears)
 
@@ -68,7 +63,7 @@ class ExpirationDateDialog : Dialog, DialogInterface.OnShowListener {
             if (Integer.parseInt(MONTHS[position]) < CURRENT_MONTH) {
                 yearAdapter.setDisabled(listOf(0))
             } else {
-                yearAdapter.setDisabled(ArrayList())
+                yearAdapter.setDisabled(listOf())
             }
         })
 
@@ -93,7 +88,8 @@ class ExpirationDateDialog : Dialog, DialogInterface.OnShowListener {
 
     override fun show() {
         Handler().postDelayed({
-            if (mEditText?.isFocused == true && ownerActivity?.isFinishing == false) {
+            val ownerActivityReady = ownerActivity != null && ownerActivity?.isFinishing == false
+            if (mEditText?.isFocused == true && ownerActivityReady) {
                 super.show()
             }
         }, mAnimationDelay.toLong())
@@ -119,8 +115,9 @@ class ExpirationDateDialog : Dialog, DialogInterface.OnShowListener {
             val focusedView = mEditText?.focusNextView()
             if (focusedView != null) {
                 Handler().postDelayed({
-                    (context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager)
-                        .showSoftInput(focusedView, 0)
+                    context.getSystemService(Context.INPUT_METHOD_SERVICE)
+                        ?.let { it as InputMethodManager }
+                        ?.showSoftInput(focusedView, 0)
                 }, mAnimationDelay.toLong())
             }
         }
@@ -142,8 +139,9 @@ class ExpirationDateDialog : Dialog, DialogInterface.OnShowListener {
                 if (selectedView is EditText) {
                     selectedView.requestFocus()
                     Handler().postDelayed({
-                        (context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager)
-                            .showSoftInput(selectedView, 0)
+                        context.getSystemService(Context.INPUT_METHOD_SERVICE)
+                            ?.let { it as InputMethodManager }
+                            ?.showSoftInput(selectedView, 0)
                     }, mAnimationDelay.toLong())
                 } else if (selectedView is Button) {
                     selectedView.callOnClick()

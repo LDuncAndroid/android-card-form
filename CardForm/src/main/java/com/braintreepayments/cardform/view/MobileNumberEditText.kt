@@ -16,16 +16,14 @@ import com.braintreepayments.cardform.R
 class MobileNumberEditText : ErrorEditText {
 
     constructor(context: Context) : super(context)
-
     constructor(context: Context, attrs: AttributeSet) : super(context, attrs)
-
     constructor(context: Context, attrs: AttributeSet?, defStyle: Int) : super(context, attrs, defStyle)
 
     /**
      * @return the unformatted mobile number entered by the user
      */
     val mobileNumber: String
-        get() = PhoneNumberUtils.stripSeparators(text!!.toString())
+        get() = PhoneNumberUtils.stripSeparators(text?.toString().orEmpty())
 
     init {
         if (!isInEditMode) {
@@ -36,7 +34,7 @@ class MobileNumberEditText : ErrorEditText {
         }
     }
 
-    override fun isValid(): Boolean = isOptional || text.toString().length >= 8
+    override fun isValid(): Boolean = isOptional || text?.toString().orEmpty().length >= 8
 
     override fun getErrorMessage(): String? = context.getString(R.string.bt_mobile_number_required)
 }

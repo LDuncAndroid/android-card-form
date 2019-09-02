@@ -17,20 +17,19 @@ import com.braintreepayments.cardform.utils.CardType
 class CardEditText : ErrorEditText, TextWatcher {
 
     constructor(context: Context) : super(context)
-
     constructor(context: Context, attrs: AttributeSet) : super(context, attrs)
-
     constructor(context: Context, attrs: AttributeSet?, defStyle: Int) : super(context, attrs, defStyle)
 
     private var mDisplayCardIcon = true
     private var mMask = false
+    private var mOnCardTypeChangedListener: OnCardTypeChangedListener? = null
+    private var mSavedTransformationMethod: TransformationMethod? = null
+
     /**
      * @return The [CardType] currently entered in the [android.widget.EditText]
      */
     var cardType: CardType? = null
         private set
-    private var mOnCardTypeChangedListener: OnCardTypeChangedListener? = null
-    private var mSavedTranformationMethod: TransformationMethod? = null
 
     interface OnCardTypeChangedListener {
         fun onCardTypeChanged(cardType: CardType)
@@ -41,7 +40,7 @@ class CardEditText : ErrorEditText, TextWatcher {
         setCardIcon(R.drawable.bt_ic_unknown)
         addTextChangedListener(this)
         updateCardType()
-        mSavedTranformationMethod = transformationMethod
+        mSavedTransformationMethod = transformationMethod
     }
 
     /**
@@ -112,7 +111,7 @@ class CardEditText : ErrorEditText, TextWatcher {
         }
     }
 
-    override fun isValid(): Boolean = isOptional || (cardType?.validate(text.toString()) ?: false)
+    override fun isValid(): Boolean = isOptional || (cardType?.validate(text?.toString().orEmpty()) == true)
 
     override fun getErrorMessage(): String? =
         when (text.isNullOrEmpty()) {
@@ -122,15 +121,15 @@ class CardEditText : ErrorEditText, TextWatcher {
 
     private fun maskNumber() {
         if (transformationMethod !is CardNumberTransformation) {
-            mSavedTranformationMethod = transformationMethod
+            mSavedTransformationMethod = transformationMethod
 
             transformationMethod = CardNumberTransformation()
         }
     }
 
     private fun unmaskNumber() {
-        if (transformationMethod !== mSavedTranformationMethod) {
-            transformationMethod = mSavedTranformationMethod
+        if (transformationMethod !== mSavedTransformationMethod) {
+            transformationMethod = mSavedTransformationMethod
         }
     }
 

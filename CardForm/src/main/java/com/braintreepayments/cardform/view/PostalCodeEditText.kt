@@ -15,9 +15,7 @@ import com.braintreepayments.cardform.R
 class PostalCodeEditText : ErrorEditText {
 
     constructor(context: Context) : super(context)
-
     constructor(context: Context, attrs: AttributeSet) : super(context, attrs)
-
     constructor(context: Context, attrs: AttributeSet?, defStyle: Int) : super(context, attrs, defStyle)
 
     init {

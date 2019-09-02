@@ -14,9 +14,7 @@ import com.braintreepayments.cardform.R
 class CardholderNameEditText : ErrorEditText {
 
     constructor(context: Context) : super(context)
-
     constructor(context: Context, attrs: AttributeSet) : super(context, attrs)
-
     constructor(context: Context, attrs: AttributeSet?, defStyle: Int) : super(context, attrs, defStyle)
 
     init {
@@ -25,7 +23,7 @@ class CardholderNameEditText : ErrorEditText {
         setFilters(filters)
     }
 
-    override fun isValid(): Boolean = isOptional || text.toString().trim { it <= ' ' }.isNotEmpty()
+    override fun isValid(): Boolean = isOptional || text?.toString().orEmpty().trim { it <= ' ' }.isNotEmpty()
 
     override fun getErrorMessage(): String? =
         context.getString(R.string.bt_cardholder_name_required)

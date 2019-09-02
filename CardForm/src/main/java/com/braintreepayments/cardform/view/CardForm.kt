@@ -650,8 +650,9 @@ class CardForm : LinearLayout, OnCardTypeChangedListener, OnFocusChangeListener,
 
     private fun requestEditTextFocus(editText: EditText) {
         editText.requestFocus()
-        (context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager)
-            .showSoftInput(editText, InputMethodManager.SHOW_IMPLICIT)
+        context.getSystemService(Context.INPUT_METHOD_SERVICE)
+            ?.let { it as InputMethodManager }
+            ?.showSoftInput(editText, InputMethodManager.SHOW_IMPLICIT)
     }
 
     /**

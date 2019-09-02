@@ -84,6 +84,7 @@ enum class CardType(
      * @return The regex matching this card type.
      */
     val pattern: Pattern = Pattern.compile(regex)
+
     /**
      * @return The relaxed prefix regex matching this card type. To be used in determining
      * card type if no pattern matches.

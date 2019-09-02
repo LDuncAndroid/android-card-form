@@ -16,9 +16,7 @@ import com.braintreepayments.cardform.utils.CardType
 class CvvEditText : ErrorEditText, TextWatcher {
 
     constructor(context: Context) : super(context)
-
     constructor(context: Context, attrs: AttributeSet) : super(context, attrs)
-
     constructor(context: Context, attrs: AttributeSet?, defStyle: Int) : super(context, attrs, defStyle)
 
     private var mCardType: CardType? = null
@@ -68,13 +66,11 @@ class CvvEditText : ErrorEditText, TextWatcher {
             ?.run {
                 validate()
 
-                if (isValid()) {
-                    focusNextView()
-                }
+                if (isValid()) focusNextView()
             }
     }
 
-    override fun isValid(): Boolean = isOptional || text.toString().length == securityCodeLength
+    override fun isValid(): Boolean = isOptional || text?.toString().orEmpty().length == securityCodeLength
 
     override fun getErrorMessage(): String? {
         val securityCodeName = mCardType

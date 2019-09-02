@@ -22,7 +22,7 @@ class ExpirationDateItemAdapter @JvmOverloads constructor(
     private val mSelectedItemBackground: ShapeDrawable
     private var mOnItemClickListener: AdapterView.OnItemClickListener? = null
     private var mSelectedPosition = -1
-    private var mDisabledPositions: List<Int> = ArrayList()
+    private var mDisabledPositions: List<Int> = listOf()
 
     init {
         val radius = context.resources.getDimension(R.dimen.bt_expiration_date_item_selected_background_radius)
@@ -63,12 +63,12 @@ class ExpirationDateItemAdapter @JvmOverloads constructor(
             }
         }
 
-        view.setOnClickListener { v ->
+        view.setOnClickListener { view ->
             mSelectedPosition = position
             notifyDataSetChanged()
             VibrationHelper.vibrate(context, 10)
 
-            mOnItemClickListener?.onItemClick(null, v, position, position.toLong())
+            mOnItemClickListener?.onItemClick(null, view, position, position.toLong())
         }
 
         return view
