@@ -10,11 +10,13 @@ import androidx.appcompat.widget.AppCompatCheckBox
 /**
  * Sets an initial CheckBox checked state that is overwritten when restoring this view.
  */
-class InitialValueCheckBox @JvmOverloads constructor(
-    context: Context,
-    attrs: AttributeSet? = null,
-    defStyleAttr: Int = 0
-) : AppCompatCheckBox(context, attrs, defStyleAttr) {
+class InitialValueCheckBox : AppCompatCheckBox {
+
+    constructor(context: Context) : super(context)
+
+    constructor(context: Context, attrs: AttributeSet) : super(context, attrs)
+
+    constructor(context: Context, attrs: AttributeSet?, defStyle: Int) : super(context, attrs, defStyle)
 
     private var mRestored: Boolean = false
 

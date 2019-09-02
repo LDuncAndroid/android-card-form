@@ -11,7 +11,9 @@ object VibrationHelper {
     @SuppressLint("MissingPermission")
     fun vibrate(context: Context, duration: Int) {
         if (hasVibrationPermission(context)) {
-            (context.getSystemService(Context.VIBRATOR_SERVICE) as Vibrator).vibrate(duration.toLong())
+            context.getSystemService(Context.VIBRATOR_SERVICE)
+                .let { it as Vibrator }
+                .vibrate(duration.toLong())
         }
     }
 

@@ -12,11 +12,13 @@ import com.braintreepayments.cardform.R
  * Input for postal codes. Validated for presence only due to the wide variation of postal code
  * formats worldwide.
  */
-class PostalCodeEditText @JvmOverloads constructor(
-    context: Context,
-    attrs: AttributeSet? = null,
-    defStyleAttr: Int = 0
-) : ErrorEditText(context, attrs, defStyleAttr) {
+class PostalCodeEditText : ErrorEditText {
+
+    constructor(context: Context) : super(context)
+
+    constructor(context: Context, attrs: AttributeSet) : super(context, attrs)
+
+    constructor(context: Context, attrs: AttributeSet?, defStyle: Int) : super(context, attrs, defStyle)
 
     init {
         inputType = InputType.TYPE_TEXT_VARIATION_POSTAL_ADDRESS

@@ -11,11 +11,13 @@ import com.braintreepayments.cardform.R
 /**
  * Input for cardholder name. Validated for presence only.
  */
-class CardholderNameEditText @JvmOverloads constructor(
-    context: Context,
-    attrs: AttributeSet? = null,
-    defStyleAttr: Int = 0
-) : ErrorEditText(context, attrs, defStyleAttr) {
+class CardholderNameEditText : ErrorEditText {
+
+    constructor(context: Context) : super(context)
+
+    constructor(context: Context, attrs: AttributeSet) : super(context, attrs)
+
+    constructor(context: Context, attrs: AttributeSet?, defStyle: Int) : super(context, attrs, defStyle)
 
     init {
         inputType = InputType.TYPE_CLASS_TEXT

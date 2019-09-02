@@ -13,11 +13,13 @@ import com.braintreepayments.cardform.R
 /**
  * Input for mobile number. Validated for presence only due to the wide variation of mobile number formats worldwide.
  */
-class MobileNumberEditText @JvmOverloads constructor(
-    context: Context,
-    attrs: AttributeSet? = null,
-    defStyleAttr: Int = 0
-) : ErrorEditText(context, attrs, defStyleAttr) {
+class MobileNumberEditText : ErrorEditText {
+
+    constructor(context: Context) : super(context)
+
+    constructor(context: Context, attrs: AttributeSet) : super(context, attrs)
+
+    constructor(context: Context, attrs: AttributeSet?, defStyle: Int) : super(context, attrs, defStyle)
 
     /**
      * @return the unformatted mobile number entered by the user

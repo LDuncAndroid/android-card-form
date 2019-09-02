@@ -11,11 +11,13 @@ import com.braintreepayments.cardform.R
 /**
  * Input for country code. Validated for presence only due to the wide variation of country code formats worldwide.
  */
-class CountryCodeEditText @JvmOverloads constructor(
-    context: Context,
-    attrs: AttributeSet? = null,
-    defStyleAttr: Int = 0
-) : ErrorEditText(context, attrs, defStyleAttr) {
+class CountryCodeEditText : ErrorEditText {
+
+    constructor(context: Context) : super(context)
+
+    constructor(context: Context, attrs: AttributeSet) : super(context, attrs)
+
+    constructor(context: Context, attrs: AttributeSet, defStyle: Int) : super(context, attrs, defStyle)
 
     /**
      * @return the numeric country code entered by the user

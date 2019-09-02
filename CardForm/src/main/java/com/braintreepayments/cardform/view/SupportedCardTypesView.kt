@@ -12,11 +12,13 @@ import java.util.*
  * Display a set of icons for a list of supported card types.
  */
 @SuppressLint("AppCompatCustomView")
-class SupportedCardTypesView @JvmOverloads constructor(
-    context: Context,
-    attrs: AttributeSet? = null,
-    defStyleAttr: Int = 0
-) : TextView(context, attrs, defStyleAttr) {
+class SupportedCardTypesView : TextView {
+
+    constructor(context: Context) : super(context)
+
+    constructor(context: Context, attrs: AttributeSet) : super(context, attrs)
+
+    constructor(context: Context, attrs: AttributeSet?, defStyle: Int) : super(context, attrs, defStyle)
 
     private val mSupportedCardTypes = ArrayList<CardType>()
 
