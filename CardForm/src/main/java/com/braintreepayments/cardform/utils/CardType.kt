@@ -144,9 +144,7 @@ enum class CardType(
                 return relaxedPrefixPatternMatch
             }
 
-            return if (cardNumber.isNotEmpty()) {
-                UNKNOWN
-            } else EMPTY
+            return if (cardNumber.isNotEmpty()) UNKNOWN else EMPTY
         }
 
         private fun forCardNumberPattern(cardNumber: String): CardType =

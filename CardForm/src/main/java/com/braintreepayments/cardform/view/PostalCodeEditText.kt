@@ -24,7 +24,7 @@ class PostalCodeEditText : ErrorEditText {
         setFilters(filters)
     }
 
-    override fun isValid(): Boolean = isOptional || text.toString().isNotEmpty()
+    override fun isValid(): Boolean = isOptional || !text?.toString().isNullOrEmpty()
 
     override fun getErrorMessage(): String? = context.getString(R.string.bt_postal_code_required)
 }

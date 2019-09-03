@@ -5,7 +5,6 @@ import android.content.Context
 import android.graphics.Rect
 import android.os.Build.VERSION.SDK_INT
 import android.os.Build.VERSION_CODES.JELLY_BEAN_MR1
-import android.text.TextUtils
 import android.util.AttributeSet
 import android.view.Gravity
 import android.view.View
@@ -75,7 +74,7 @@ open class ErrorEditText : TextInputEditText {
 
     override fun onFocusChanged(focused: Boolean, direction: Int, previouslyFocusedRect: Rect?) {
         super.onFocusChanged(focused, direction, previouslyFocusedRect)
-        if (!focused && !isValid() && !TextUtils.isEmpty(text)) {
+        if (!focused && !isValid() && !text?.toString().isNullOrEmpty()) {
             setError(getErrorMessage())
         }
     }

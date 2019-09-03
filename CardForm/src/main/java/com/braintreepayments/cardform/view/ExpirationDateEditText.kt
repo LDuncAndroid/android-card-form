@@ -88,14 +88,16 @@ class ExpirationDateEditText : ErrorEditText, TextWatcher, View.OnClickListener 
     public override fun onFocusChanged(focused: Boolean, direction: Int, previouslyFocusedRect: Rect?) {
         super.onFocusChanged(focused, direction, previouslyFocusedRect)
 
-        mExpirationDateDialog?.let {
-            if (focused && mUseExpirationDateDialog) {
-                closeSoftKeyboard()
-                it.show()
-            } else if (mUseExpirationDateDialog) {
-                it.dismiss()
+        mExpirationDateDialog
+            ?.takeIf { mUseExpirationDateDialog }
+            ?.let {
+                if (focused) {
+                    closeSoftKeyboard()
+                    it.show()
+                } else {
+                    it.dismiss()
+                }
             }
-        }
     }
 
     public override fun onDetachedFromWindow() {

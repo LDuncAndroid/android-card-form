@@ -44,8 +44,8 @@ class CardEditText : ErrorEditText, TextWatcher {
     }
 
     /**
-     * Enable or disable showing card type icons as part of the [CardEditText]. Defaults to
-     * `true`.
+     * Enable or disable showing card type icons as part of the [CardEditText].
+     * Defaults to `true`.
      *
      * @param display `true` to display card type icons, `false` to never display card
      * type icons.
