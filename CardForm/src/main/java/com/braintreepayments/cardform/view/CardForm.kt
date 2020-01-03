@@ -389,6 +389,15 @@ class CardForm : LinearLayout, OnCardTypeChangedListener, OnFocusChangeListener,
     }
 
     /**
+     * Sets the icon to the left of the card-holder name entry field, overriding the default icon.
+     *
+     * @param res The drawable resource for the card-holder name icon
+     */
+    fun setCardholderNameIcon(@DrawableRes res: Int) {
+        bt_card_form_cardholder_name_icon.setImageResource(res)
+    }
+
+    /**
      * Sets the icon to the left of the card number entry field, overriding the default icon.
      *
      * @param res The drawable resource for the card number icon
