@@ -1,7 +1,6 @@
 apply plugin: 'com.android.library'
-apply plugin: 'maven'
-apply plugin: 'signing'
-apply plugin: 'io.codearte.nexus-staging'
+
+apply plugin: 'digital.wup.android-maven-publish'
 
 version '4.2.1-SNAPSHOT'
 
@@ -31,8 +30,6 @@ android {
         textReport true
         textOutput 'stdout'
     }
-
-    resourcePrefix 'bt_'
 }
 
 dependencies {
@@ -66,75 +63,27 @@ artifacts {
     archives sourcesJar
 }
 
-signing {
-    required {
-        !version.endsWith("SNAPSHOT") && !version.endsWith("DEVELOPMENT")
+
+publishing {
+    publications {
+        android.libraryVariants.all { variant ->
+
+            "maven${variant.name.capitalize()}Aar"(MavenPublication) {
+                from components.findByName("android${variant.name.capitalize()}")
+                groupId 'com.comcarde'
+                artifactId "cardform-${variant.name}"
+                version "$version"
+            }
+        }
     }
-    sign configurations.archives
-}
 
-nexusStaging {
-    packageGroup = "com.braintreepayments"
-}
-
-def sonatypeUsername = System.env['SONATYPE_USERNAME']
-def sonatypePassword = System.env['SONATYPE_PASSWORD']
-
-uploadArchives {
+    // This is for publishing Repo + Credentials to CloudRepo
     repositories {
-        mavenDeployer {
-            beforeDeployment { MavenDeployment deployment -> signing.signPom(deployment) }
-
-            if (version.endsWith("DEVELOPMENT")) {
-                repository(url: 'file:///tmp/maven/')
-            } else {
-                repository(url: 'https://oss.sonatype.org/service/local/staging/deploy/maven2/') {
-                    authentication(userName: sonatypeUsername, password: sonatypePassword)
-                }
-            }
-            snapshotRepository(url: 'https://oss.sonatype.org/content/repositories/snapshots/') {
-                authentication(userName: sonatypeUsername, password: sonatypePassword)
-            }
-
-            pom.setArtifactId 'card-form'
-
-            pom.project {
-                name 'card-form'
-                groupId = 'com.braintreepayments'
-                version = "${android.defaultConfig.versionName}"
-                packaging 'aar'
-                description 'A ready-made card form layout that can be included in your Android app, making it easy to accept credit and debit cards.'
-
-                url 'https://github.com/braintree/android-card-form'
-
-                scm {
-                    url 'scm:git@github.com:braintree/android-card-form.git'
-                    connection 'scm:git@github.com:braintree/android-card-form.git'
-                    developerConnection 'scm:git@github.com:braintree/android-card-form.git'
-                }
-
-                developers {
-                    developer {
-                        id 'devs'
-                        name 'Braintree Payments'
-                    }
-                }
-
-                licenses {
-                    license {
-                        name 'MIT'
-                        url 'http://opensource.org/licenses/MIT'
-                        distribution 'repo'
-                    }
-                }
-            }
-
-            pom.whenConfigured { MavenPom pom ->
-                pom.dependencies.each {
-                    if (it.artifactId == 'android-sdk') {
-                        it.optional = true
-                    }
-                }
+        maven {
+            url "https://comcarde.mycloudrepo.io/repositories/cardform"
+            credentials {
+                username System.getenv("CLOUDREPO_WRITE_USERNAME") ?: "${cloudrepoWriteUsername}"
+                password System.getenv("CLOUDREPO_WRITE_PASSWORD") ?: "${cloudrepoWritePassword}"
             }
         }
     }

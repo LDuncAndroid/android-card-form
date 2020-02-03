@@ -4,8 +4,10 @@ buildscript {
         jcenter()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.2.1'
-        classpath 'io.codearte.gradle.nexus:gradle-nexus-staging-plugin:0.5.3'
+        classpath 'com.android.tools.build:gradle:3.5.3'
+
+        // Android Maven AAR library Publishing
+        classpath 'digital.wup:android-maven-publish:3.6.2'
     }
 }
 
