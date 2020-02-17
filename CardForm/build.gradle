@@ -2,7 +2,7 @@ apply plugin: 'com.android.library'
 
 apply plugin: 'digital.wup.android-maven-publish'
 
-version '4.2.1-SNAPSHOT'
+version '4.2.1'
 
 android {
     compileSdkVersion 28
@@ -63,16 +63,25 @@ artifacts {
     archives sourcesJar
 }
 
+publishing {
+    publications {
+        mavenAar(MavenPublication) {
+            from components.android
+        }
+    }
+}
 
 publishing {
     publications {
         android.libraryVariants.all { variant ->
-
-            "maven${variant.name.capitalize()}Aar"(MavenPublication) {
-                from components.findByName("android${variant.name.capitalize()}")
-                groupId 'com.comcarde'
-                artifactId "cardform-${variant.name}"
-                version "$version"
+            // only publish release variants
+            if (variant.name.contains("release")) {
+                "maven${variant.name.capitalize()}Aar"(MavenPublication) {
+                    from components.findByName("android${variant.name.capitalize()}")
+                    groupId 'com.comcarde'
+                    artifactId 'cardform'
+                    version "$version"
+                }
             }
         }
     }
@@ -80,7 +89,7 @@ publishing {
     // This is for publishing Repo + Credentials to CloudRepo
     repositories {
         maven {
-            url "https://comcarde.mycloudrepo.io/repositories/cardform"
+            url "https://comcarde.mycloudrepo.io/repositories/comcarde"
             credentials {
                 username System.getenv("CLOUDREPO_WRITE_USERNAME") ?: "${cloudrepoWriteUsername}"
                 password System.getenv("CLOUDREPO_WRITE_PASSWORD") ?: "${cloudrepoWritePassword}"
